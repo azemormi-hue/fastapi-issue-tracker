@@ -22,7 +22,7 @@ class IssueCreate(BaseModel):
 
 
 class IssueUpdate(BaseModel):
-    title: Optional[str] = Field(default=None, max_length=100)
+    title: Optional[str] = Field(default=None, min_length=3, max_length=100)
     description: Optional[str] = Field(
         default=None, min_length=5, max_length=2000)
     priority: Optional[IssuePriority] = None

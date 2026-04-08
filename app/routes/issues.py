@@ -1,15 +1,23 @@
 import uuid
-from fastapi import APIRouter, HTTPException, status
-from app.schemas import IssueCreate, IssueUpdate, IssueOut
+from typing import Optional
+from fastapi import APIRouter, HTTPException, Query, status
+from app.schemas import IssueCreate, IssueUpdate, IssueOut, IssuePriority, IssueStatus
 from app.storage import load_data, save_data
 
 router = APIRouter(prefix="/api/v1/issues", tags=["Issues"])
 
 
 @router.get("", response_model=list[IssueOut])
-def get_issues():
-    """Get all issues."""
+def get_issues(
+    status: Optional[IssueStatus] = Query(default=None, description="Filter by status"),
+    priority: Optional[IssuePriority] = Query(default=None, description="Filter by priority"),
+):
+    """Get all issues, optionally filtered by status and/or priority."""
     issues = load_data()
+    if status is not None:
+        issues = [i for i in issues if i["status"] == status.value]
+    if priority is not None:
+        issues = [i for i in issues if i["priority"] == priority.value]
     return issues
 
 

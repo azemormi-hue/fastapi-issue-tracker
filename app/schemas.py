@@ -35,3 +35,21 @@ class IssueOut(BaseModel):
     description: str
     priority: IssuePriority
     status: IssueStatus
+
+
+class AIClassifyResponse(BaseModel):
+    issue_id: str
+    suggested_priority: IssuePriority
+    reasoning: str
+
+
+class AISuggestResponse(BaseModel):
+    issue_id: str
+    suggestion: str
+
+
+class AISummarizeResponse(BaseModel):
+    summary: str
+    total_issues: int
+    by_status: dict[str, int]
+    by_priority: dict[str, int]

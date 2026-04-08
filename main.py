@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.issues import router as issues_router
+from app.routes.ai import router as ai_router
 from app.middleware.timing import timing_middleware
 
 app = FastAPI(
@@ -26,3 +27,4 @@ def health_check():
 
 
 app.include_router(issues_router)
+app.include_router(ai_router)
